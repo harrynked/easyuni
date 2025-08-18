@@ -1,0 +1,115 @@
+ <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EASYUNI - Thông Tin Trường Đại Học</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://cdn.glitch.global/4b7de0a2-193c-464b-8704-a60a0e536674/istockphoto-1249802610-612x612.jpg?v=1742062392172" type="image/icon type">
+    <meta name="monetag" content="c580383ec7b5b1c8f021fb6cc0b5ba81">
+  </head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">EASY<span>UNI</span></div>
+            <div class="mobile-menu-btn">☰</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="index.html#about">Giới Thiệu</a></li>
+                    <li><a href="info.html" class="active">Thông Tin Trường</a></li>
+                    <li><a href="index.html#quiz">Trắc Nghiệm</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="university-info">
+            <h2>Thông Tin Trường Đại Học</h2>
+            <div class="search-container">
+                <input type="text" id="university-search" placeholder="Tìm kiếm theo tên trường...">
+                <select id="major-filter">
+                    <option value="">Tất cả ngành học</option>
+                    <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+                    <option value="Kinh tế">Kinh tế</option>
+                    <option value="Y dược">Y dược</option>
+                    <option value="Luật">Luật</option>
+                    <option value="Kỹ thuật">Kỹ thuật</option>
+                    <option value="Ngoại ngữ">Ngoại ngữ</option>
+                    <option value="Sư phạm">Sư phạm</option>
+                    <option value="Truyền thông">Truyền thông</option>
+                    <option>Nông nghiệp</option>
+                    <option>Xây dựng</option>
+                    <option>Quản trị</option>
+                    <option>Tài chính</option>
+                    <option>Tâm lý học</option>
+                    <option>Khoa học tự nhiên</option>
+                    <option>Khoa học xã hội</option>
+                    <option>Môi trường</option>
+                    <option>Kiến trúc</option>
+                    <option>Điện - Điện tử</option>
+                </select>
+                <select id="region-filter">
+                    <option value="">Tất cả khu vực</option>
+                    <option value="Bắc">Miền Bắc</option>
+                    <option value="Trung">Miền Trung</option>
+                    <option value="Nam">Miền Nam</option>
+                </select>
+                <button id="search-btn">Tìm Kiếm</button>
+            </div>
+            <div id="university-grid" class="university-grid">
+                <!-- University cards will be populated here by JavaScript -->
+         </div>
+        </section>
+    </main>
+<!-- DONATION -->
+    <div class="donate-container">
+        <h2 class="donate-title">Ủng hộ chúng tôi</h2>
+        <p class="donate-description">Sự đóng góp của bạn sẽ giúp chúng tôi duy trì và phát triển dự án này.</p>
+        
+        <div class="donate-methods">
+            <a href="https://paypal.me/niumvpv?country.x=VN&locale.x=vi_VN" class="donate-button">PayPal</a>
+            <a href="https://cdn.glitch.global/4b7de0a2-193c-464b-8704-a60a0e536674/c7ad25b5-a249-433d-9f19-2a79e05741c3.image.png?v=1743243553182" class="donate-button">Momo</a>
+            <a href="https://cdn.glitch.global/4b7de0a2-193c-464b-8704-a60a0e536674/79c2fee6-dad5-499d-80b7-3654daaa304a.image.png?v=1743243562919" class="donate-button">Chuyển khoản</a>
+        </div>
+        
+        <div class="donate-info">
+            <p>Nếu bạn muốn ủng hộ bằng cách khác, vui lòng liên hệ: <strong>slandermanviking@gmail.com</strong></p>
+            <p>Cảm ơn bạn đã ủng hộ!</p>
+        </div>
+    </div>
+  
+    <button id="backToTop">
+        ▲
+    </button>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>EASYUNI</h3>
+                <p>Định hướng nghề nghiệp và chọn trường đại học cho học sinh lớp 12.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="index.html#about">Giới Thiệu</a></li>
+                    <li><a href="info.html">Thông Tin Trường</a></li>
+                    <li><a href="index.html#quiz">Trắc Nghiệm</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <p>Email: slandermanviking@gmail.com</p>
+                <p>Điện thoại: 089939JQKA</p>
+                <p>Địa chỉ: Đà Nẵng, Việt Nam</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 EASYUNI</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

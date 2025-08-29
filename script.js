@@ -2627,7 +2627,6 @@ studyAbroadPrograms.forEach(program => {
 });
 
 console.log('Enhanced Education Counseling System initialized successfully!');
-});
 
 function setupGlobalEventListeners() {
   // Keyboard shortcuts
@@ -2644,7 +2643,7 @@ function setupGlobalEventListeners() {
           break;
       }
     }
-    
+  }};
     if (e.key === 'Escape') {
       // Close any open modals
       document.querySelectorAll('.modal-overlay').forEach(modal => modal.remove());
@@ -2716,7 +2715,7 @@ function displayStudyAbroadPrograms(programs) {
         </div>
       </div>
     </div>
-  `;
+  `).join('');
 
   // Scroll to top button functionality
   const scrollToTopBtn = document.createElement('button');

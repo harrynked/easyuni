@@ -2614,7 +2614,42 @@ function initStudyAbroad() {
   // Advanced search toggle
   document.getElementById('toggle-advanced-search')?.addEventListener('click', toggleAdvancedSearch);
 }
+// Set up global event listeners
+setupGlobalEventListeners();
 
+// Initialize deadlines for existing programs
+studyAbroadPrograms.forEach(program => {
+  deadlineManager.addDeadline(
+    program.id, 
+    program.deadline.split('/').reverse().join('-'), 
+    `Application deadline - ${program.university}`
+  );
+});
+
+console.log('Enhanced Education Counseling System initialized successfully!');
+});
+
+function setupGlobalEventListeners() {
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+      switch (e.key) {
+        case 'k':
+          e.preventDefault();
+          document.getElementById('major-search')?.focus();
+          break;
+        case 'f':
+          e.preventDefault();
+          document.getElementById('news-search')?.focus();
+          break;
+      }
+    }
+    
+    if (e.key === 'Escape') {
+      // Close any open modals
+      document.querySelectorAll('.modal-overlay').forEach(modal => modal.remove());
+    }
+  });
 function displayStudyAbroadPrograms(programs) {
   const grid = document.getElementById('study-abroad-grid');
   if (!grid) return;
@@ -2675,128 +2710,533 @@ function displayStudyAbroadPrograms(programs) {
           <button class="btn-secondary compare-btn" onclick="addToCompare(${program.id})">
             ⚖️ So sánh
           </button>
+       <button class="btn-secondary details-btn" onclick="downloadProgramInfo(${program.id})">
+            📥 Tải PDF
+          </button>
         </div>
       </div>
+    </div>
+  `;
 
-// Compare button quick handler
-  document.getElementById('compare-button')?.addEventListener('click', () => {
-    showComparison();
-  };
-
+  // Scroll to top button functionality
+  const scrollToTopBtn = document.createElement('button');
+  scrollToTopBtn.innerHTML = '↑';
+  scrollToTopBtn.className = 'scroll-to-top';
+  scrollToTopBtn.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    font-size: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  `;
   
-// Range inputs handlers
-function updateTuitionRange(e) {
-  const value = Number(e?.target?.value ?? document.getElementById('tuition-range')?.value ?? 0);
-  // Assuming single-ended slider controls the upper bound
-  advancedSearch.updateFilter('tuitionRange', [0, value]);
-  // Update UI label if present
-  const label = document.getElementById('tuition-range-label');
-  if (label) label.textContent = `≤ ${value.toLocaleString()}`;
-  applyAdvancedFilters();
+  scrollToTopBtn.addEventListener('mouseenter', function() {
+    this.style.transform = 'scale(1.1)';
+    this.style.background = '#0056b3';
+  });
+  
+  scrollToTopBtn.addEventListener('mouseleave', function() {
+    this.style.transform = 'scale(1)';
+    this.style.background = '#007bff';
+  });
+  
+  document.body.appendChild(scrollToTopBtn);
+  
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.style.display = 'block';
+    } else {
+      scrollToTopBtn.style.display = 'none';
+    }
+  });
+  
+  scrollToTopBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Compare button functionality
+  const compareButton = document.createElement('div');
+  compareButton.id = 'compare-button';
+  compareButton.innerHTML = 'So sánh (0)';
+  compareButton.style.cssText = `
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  `;
+  
+  compareButton.addEventListener('click', showComparison);
+  compareButton.addEventListener('mouseenter', function() {
+    this.style.transform = 'scale(1.05)';
+    this.style.background = '#218838';
+  });
+  
+  compareButton.addEventListener('mouseleave', function() {
+    this.style.transform = 'scale(1)';
+    this.style.background = '#28a745';
+  });
+  
+  document.body.appendChild(compareButton);
 }
 
-function updateRankingRange(e) {
-  const value = Number(e?.target?.value ?? document.getElementById('ranking-range')?.value ?? 100);
-  // Assuming single-ended slider controls the upper bound
-  advancedSearch.updateFilter('ranking', [1, value]);
-  const label = document.getElementById('ranking-range-label');
-  if (label) label.textContent = `Top ≤ ${value}`;
-  applyAdvancedFilters();
+// Additional utility functions for enhanced features
+function performTrendingSearch(query) {
+  const searchInput = document.getElementById('major-search');
+  if (searchInput) {
+    searchInput.value = query;
+    applyAdvancedFilters();
+  }
 }
 
-// Utility mappers
-function getCategoryName(key) {
-  const map = {
-    'university': 'Đại học',
-    'scholarship': 'Học bổng',
-    'career': 'Nghề nghiệp',
-    'study-abroad': 'Du học'
+function setDeadlineReminder(deadlineId) {
+  showNotification('Nhắc nhở đã được thiết lập! Bạn sẽ nhận được thông báo trước deadline.', 'success');
+  analyticsManager.trackInteraction('set_reminder', `deadline:${deadlineId}`);
+}
+
+function toggleMilestone(applicationId, taskName) {
+  const application = applicationTracker.applications.find(app => app.id === applicationId);
+  if (!application) return;
+  
+  const milestone = application.timeline.find(m => m.task === taskName);
+  if (milestone) {
+    milestone.completed = !milestone.completed;
+    analyticsManager.trackInteraction('toggle_milestone', `application:${applicationId}`);
+    
+    // Refresh the modal content
+    const button = event.target;
+    button.innerHTML = milestone.completed ? '✅ Hoàn thành' : '⭕ Đánh dấu hoàn thành';
+    button.parentElement.parentElement.classList.toggle('completed');
+    
+    showNotification(
+      milestone.completed ? 'Đã hoàn thành nhiệm vụ!' : 'Đã bỏ đánh dấu hoàn thành',
+      milestone.completed ? 'success' : 'info'
+    );
+  }
+}
+
+function uploadDocument(applicationId, documentName) {
+  // Simulate document upload
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.pdf,.doc,.docx,.jpg,.png';
+  
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file size (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        showNotification('File quá lớn! Vui lòng chọn file dưới 10MB.', 'error');
+        return;
+      }
+      
+      // Simulate upload progress
+      showNotification('Đang tải lên tài liệu...', 'info');
+      
+      setTimeout(() => {
+        showNotification(`Đã tải lên tài liệu: ${file.name} cho ${documentName}`, 'success');
+        analyticsManager.trackInteraction('upload_document', `application:${applicationId}`);
+      }, 2000);
+    }
   };
-  return map[key] || key;
+  
+  input.click();
 }
 
-function formatDate(isoOrYYYYMMDD) {
-  // Handles 'YYYY-MM-DD' or ISO strings
-  const d = new Date(isoOrYYYYMMDD);
-  if (isNaN(d)) return isoOrYYYYMMDD;
-  return d.toLocaleDateString('vi-VN');
+function createDocument(type, applicationId) {
+  const document = documentManager.createDocument(type, applicationId);
+  if (document) {
+    showDocumentEditor(document);
+  }
 }
 
+function showDocumentEditor(document) {
+  const modalHTML = `
+    <div class="modal-overlay" id="document-editor-modal">
+      <div class="modal-content document-editor-modal">
+        <div class="modal-header">
+          <h2>✏️ ${document.name}</h2>
+          <button class="modal-close" onclick="closeModal('document-editor-modal')">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="document-editor">
+            ${document.content.map((section, index) => `
+              <div class="editor-section">
+                <h4>${section.section}</h4>
+                <textarea 
+                  id="section-${index}" 
+                  placeholder="Nhập nội dung cho phần này..."
+                  rows="4"
+                >${section.content}</textarea>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="editor-tools">
+            <button class="btn-sm" onclick="saveDocument(${document.id})">💾 Lưu</button>
+            <button class="btn-sm" onclick="previewDocument(${document.id})">👀 Xem trước</button>
+            <button class="btn-sm" onclick="exportDocument(${document.id})">📤 Xuất file</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function saveDocument(documentId) {
+  const document = documentManager.documents.find(doc => doc.id === documentId);
+  if (!document) return;
+  
+  // Collect content from textareas
+  const updatedContent = document.content.map((section, index) => ({
+    ...section,
+    content: document.getElementById(`section-${index}`)?.value || ''
+  }));
+  
+  documentManager.updateDocument(documentId, updatedContent);
+  showNotification('Tài liệu đã được lưu!', 'success');
+  analyticsManager.trackInteraction('save_document', `document:${documentId}`);
+}
+
+function previewDocument(documentId) {
+  const document = documentManager.documents.find(doc => doc.id === documentId);
+  if (!document) return;
+  
+  const previewHTML = `
+    <div class="modal-overlay" id="document-preview-modal">
+      <div class="modal-content document-preview-modal">
+        <div class="modal-header">
+          <h2>👀 Xem trước: ${document.name}</h2>
+          <button class="modal-close" onclick="closeModal('document-preview-modal')">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="document-preview">
+            ${document.content.map(section => `
+              <div class="preview-section">
+                <h3>${section.section}</h3>
+                <p>${section.content || '<em>Chưa có nội dung</em>'}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('document-preview-modal')">Đóng</button>
+          <button class="btn-primary" onclick="exportDocument(${documentId}); closeModal('document-preview-modal')">📤 Xuất file</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', previewHTML);
+}
+
+function exportDocument(documentId) {
+  const document = documentManager.documents.find(doc => doc.id === documentId);
+  if (!document) return;
+  
+  const docContent = document.content.map(section => 
+    `${section.section}\n${'='.repeat(section.section.length)}\n\n${section.content}\n\n`
+  ).join('');
+  
+  const fullContent = `${document.name}\n${'='.repeat(document.name.length)}\n\n${docContent}\nTạo lúc: ${new Date().toLocaleString('vi-VN')}`;
+  
+  const blob = new Blob([fullContent], { type: 'text/plain;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `${document.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+  link.click();
+  
+  showNotification('Đã xuất tài liệu thành công!', 'success');
+  analyticsManager.trackInteraction('export_document', `document:${documentId}`);
+}
+
+function saveApplicationDraft(applicationId) {
+  applicationTracker.updateApplicationStatus(applicationId, 'draft');
+  showNotification('Hồ sơ ứng tuyển đã được lưu dưới dạng bản nháp!', 'success');
+  closeModal('application-modal');
+}
+
+function submitApplication(applicationId) {
+  const application = applicationTracker.applications.find(app => app.id === applicationId);
+  if (!application) return;
+  
+  // Check if all required documents are completed
+  const incompleteRequiredDocs = application.documents.filter(doc => 
+    doc.required && doc.status === 'pending'
+  );
+  
+  if (incompleteRequiredDocs.length > 0) {
+    showNotification(`Vui lòng hoàn thành các tài liệu bắt buộc: ${incompleteRequiredDocs.map(doc => doc.name).join(', ')}`, 'error');
+    return;
+  }
+  
+  applicationTracker.updateApplicationStatus(applicationId, 'submitted');
+  showNotification('Hồ sơ ứng tuyển đã được nộp thành công!', 'success');
+  analyticsManager.trackInteraction('submit_application', `application:${applicationId}`);
+  closeModal('application-modal');
+}
+
+// Success notification system
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.innerHTML = `
+    <span class="notification-message">${message}</span>
+    <button class="notification-close" onclick="this.parentElement.remove()">&times;</button>
+  `;
+  
+  const colors = {
+    info: '#007bff',
+    success: '#28a745',
+    warning: '#ffc107',
+    error: '#dc3545'
+  };
+  
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: ${colors[type] || colors.info};
+    color: white;
+    border-radius: 5px;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: slideIn 0.3s ease;
+    max-width: 400px;
+    word-wrap: break-word;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.remove();
+    }
+  }, 5000);
+}
+
+// Utility functions for UI elements
 function getCountryFlag(country) {
-  // Minimal mapping, fallback to country text
   const flags = {
     'USA': '🇺🇸',
     'UK': '🇬🇧',
     'Canada': '🇨🇦',
     'Australia': '🇦🇺',
-    'Switzerland': '🇨🇭',
-    'Japan': '🇯🇵',
     'Germany': '🇩🇪',
+    'Japan': '🇯🇵',
     'Singapore': '🇸🇬',
-    'Vietnam': '🇻🇳',
+    'Switzerland': '🇨🇭',
+    'France': '🇫🇷',
+    'Netherlands': '🇳🇱'
   };
-  return `<span class="flag">${flags[country] || '🏳️'}${flags[country] ? '' : ' ' + country}</span>`;
+  return flags[country] || '🌍';
 }
 
-// Make displayRecommendations support both direct data and self-fetch
-(function enhanceDisplayRecommendations() {
-  const original = typeof displayRecommendations === 'function' ? displayRecommendations : null;
-  window.displayRecommendations = function(programs) {
-    // If programs not provided, compute then render
-    if (!programs) {
-      const recommended = recommendationEngine.getRecommendations(studyAbroadPrograms, 3);
-      return original ? original(recommended) : (function render(progs) {
-        const container = document.getElementById('recommendations-container');
-        if (!container || progs.length === 0) return;
-        container.innerHTML = `
-          <div class="recommendations-section">
-            <h3>🎯 Gợi ý cho bạn</h3>
-            <div class="recommendations-grid">
-              ${progs.map(program => `
-                <div class="recommendation-card" onclick="showProgramDetails(${program.id})">
-                  <div class="recommendation-score">${Math.round(program.recommendationScore)}%</div>
-                  <div class="recommendation-content">
-                    <h4>${program.university}</h4>
-                    <p>${program.program} - ${program.major}</p>
-                    <span class="country">${getCountryFlag(program.country)} ${program.country}</span>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      })(recommended);
-    }
-    // If provided, pass-through to original renderer if exists; else render inline
-    if (original && original !== window.displayRecommendations) {
-      return original(programs);
-    }
-    const container = document.getElementById('recommendations-container');
-    if (!container || programs.length === 0) return;
-    container.innerHTML = `
-      <div class="recommendations-section">
-        <h3>🎯 Gợi ý cho bạn</h3>
-        <div class="recommendations-grid">
-          ${programs.map(program => `
-            <div class="recommendation-card" onclick="showProgramDetails(${program.id})">
-              <div class="recommendation-score">${Math.round(program.recommendationScore)}%</div>
-              <div class="recommendation-content">
-                <h4>${program.university}</h4>
-                <p>${program.program} - ${program.major}</p>
-                <span class="country">${getCountryFlag(program.country)} ${program.country}</span>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
+function getCategoryName(category) {
+  const categories = {
+    'university': 'Đại học',
+    'scholarship': 'Học bổng',
+    'career': 'Nghề nghiệp',
+    'study-abroad': 'Du học',
+    'news': 'Tin tức',
+    'exam': 'Thi cử'
   };
-})();
-
-// Ensure dashboard call works even if called early
-if (typeof displayRecommendations === 'function') {
-  // no-op, wrapper above handles both cases
+  return categories[category] || category;
 }
 
-// Optional: expose showComparison from a button with id 'compare-button' if present
-document.getElementById('compare-button')?.addEventListener('click', showComparison);
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('vi-VN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+function updateTuitionRange() {
+  const slider = document.getElementById('tuition-range');
+  const display = document.getElementById('tuition-range-display');
+  if (slider && display) {
+    const value = slider.value;
+    display.textContent = `$0 - $${parseInt(value).toLocaleString()}`;
+    advancedSearch.updateFilter('tuitionRange', [0, parseInt(value)]);
+    applyAdvancedFilters();
+  }
+}
+
+function updateRankingRange() {
+  const slider = document.getElementById('ranking-range');
+  const display = document.getElementById('ranking-range-display');
+  if (slider && display) {
+    const value = slider.value;
+    display.textContent = `Top 1 - ${value}`;
+    advancedSearch.updateFilter('ranking', [1, parseInt(value)]);
+    applyAdvancedFilters();
+  }
+}
+
+// Add CSS animations and styles
+const enhancedStyles = document.createElement('style');
+enhancedStyles.textContent = `
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .notification-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    margin-left: 10px;
+  }
+  
+  .notification-close:hover {
+    opacity: 0.8;
+  }
+  
+  .enhanced .study-abroad-card {
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .enhanced .study-abroad-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  
+  .difficulty-cao { 
+    color: #dc3545; 
+    font-weight: bold;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+  
+  .difficulty-trung-bình { 
+    color: #ffc107; 
+    font-weight: bold;
+    background: rgba(255, 193, 7, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+  
+  .difficulty-thấp { 
+    color: #28a745; 
+    font-weight: bold;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 8px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+  }
+  
+  .completed {
+    opacity: 0.7;
+    text-decoration: line-through;
+  }
+  
+  .urgent {
+    border-left: 4px solid #dc3545;
+    background: rgba(220, 53, 69, 0.05);
+  }
+  
+  .loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .search-highlight {
+    background: yellow;
+    padding: 1px 3px;
+    border-radius: 2px;
+  }
+`;
+document.head.appendChild(enhancedStyles);
+
+// Initialize system on load
+console.log('🎓 Enhanced Education Counseling System loaded successfully!');
+console.log('📊 Features included: Advanced Search, Application Tracking, Analytics, Document Management, and more!');
+
+// Global error handler
+window.addEventListener('error', function(e) {
+  console.error('Education System Error:', e.error);
+  showNotification('Đã xảy ra lỗi. Vui lòng thử lại sau.', 'error');
+});
+
+// Service worker registration for offline support (optional)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(err => {
+    console.log('ServiceWorker registration failed:', err);
+  });
+}

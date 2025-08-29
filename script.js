@@ -1891,3 +1891,267 @@ document.getElementById("retake-btn").addEventListener("click", function () {
 
 // Initialize the quiz when the page loads
 initQuiz();
+
+
+// Study Abroad Data
+const studyAbroadPrograms = [
+  {
+    id: 1,
+    university: "Harvard University",
+    country: "USA",
+    program: "Master",
+    major: "Computer Science",
+    duration: "2 năm",
+    tuition: "$50,000/năm",
+    requirements: ["IELTS 7.0+", "GRE 320+", "Bachelor GPA 3.5+"],
+    deadline: "01/12/2025",
+    description: "Chương trình Thạc sĩ Khoa học Máy tính tại Harvard với giảng viên hàng đầu thế giới."
+  },
+  {
+    id: 2,
+    university: "University of Oxford",
+    country: "UK",
+    program: "Bachelor",
+    major: "Economics",
+    duration: "3 năm",
+    tuition: "£35,000/năm",
+    requirements: ["IELTS 7.5+", "A-levels AAA", "Personal Statement"],
+    deadline: "15/01/2025",
+    description: "Chương trình Cử nhân Kinh tế học tại Oxford với truyền thống giáo dục lâu đời."
+  },
+  {
+    id: 3,
+    university: "University of Toronto",
+    country: "Canada",
+    program: "PhD",
+    major: "Engineering",
+    duration: "4-6 năm",
+    tuition: "$25,000/năm",
+    requirements: ["IELTS 7.0+", "Master degree", "Research proposal"],
+    deadline: "31/01/2025",
+    description: "Chương trình Tiến sĩ Kỹ thuật với cơ hội nghiên cứu tại các phòng lab hiện đại."
+  },
+  {
+    id: 4,
+    university: "University of Melbourne",
+    country: "Australia",
+    program: "Master",
+    major: "Business",
+    duration: "1.5-2 năm",
+    tuition: "AUD $45,000/năm",
+    requirements: ["IELTS 6.5+", "GMAT 600+", "Work experience 2+ years"],
+    deadline: "28/02/2025",
+    description: "MBA tại Melbourne với focus vào thị trường châu Á - Thái Bình Dương."
+  }
+];
+
+// News Data
+const newsArticles = [
+  {
+    id: 1,
+    title: "Xu hướng tuyển sinh đại học 2025: Tăng cường đánh giá năng lực",
+    excerpt: "Nhiều trường đại học hàng đầu Việt Nam đang chuyển sang phương thức tuyển sinh dựa trên đánh giá năng lực thay vì chỉ dựa vào điểm thi...",
+    category: "university",
+    date: "2025-01-15",
+    tags: ["tuyển sinh", "đánh giá năng lực"],
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400"
+  },
+  {
+    id: 2,
+    title: "100 suất học bổng toàn phần du học Nhật Bản 2025",
+    excerpt: "Chính phủ Nhật Bản công bố chương trình học bổng MEXT mới với 100 suất học bổng toàn phần cho sinh viên Việt Nam...",
+    category: "scholarship",
+    date: "2025-01-14",
+    tags: ["học bổng", "Nhật Bản", "MEXT"],
+    image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=400"
+  },
+  {
+    id: 3,
+    title: "Top 10 ngành nghề được dự báo hot nhất năm 2025",
+    excerpt: "Khảo sát từ các nhà tuyển dụng lớn cho thấy AI, Data Science, và Cybersecurity là những ngành có nhu cầu nhân lực cao nhất...",
+    category: "career",
+    date: "2025-01-13",
+    tags: ["nghề nghiệp", "AI", "xu hướng"],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400"
+  }
+];
+
+// Study Abroad Functions
+function initStudyAbroad() {
+  displayStudyAbroadPrograms(studyAbroadPrograms);
+  
+  // Event listeners for filters
+  document.getElementById('country-filter')?.addEventListener('change', filterStudyAbroadPrograms);
+  document.getElementById('program-filter')?.addEventListener('change', filterStudyAbroadPrograms);
+  document.getElementById('study-abroad-search-btn')?.addEventListener('click', filterStudyAbroadPrograms);
+}
+
+function displayStudyAbroadPrograms(programs) {
+  const grid = document.getElementById('study-abroad-grid');
+  if (!grid) return;
+  
+  if (programs.length === 0) {
+    grid.innerHTML = '<div class="no-results">Không tìm thấy chương trình phù hợp.</div>';
+    return;
+  }
+  
+  grid.innerHTML = programs.map(program => `
+    <div class="study-abroad-card">
+      <div class="study-abroad-card-header">
+        <div class="country-flag">${getCountryFlag(program.country)}</div>
+        <h3>${program.university}</h3>
+        <p>${program.country}</p>
+      </div>
+      <div class="study-abroad-card-body">
+        <div class="program-info">
+          <span class="info-tag">${program.program}</span>
+          <span class="info-tag">${program.major}</span>
+          <span class="info-tag">${program.duration}</span>
+        </div>
+        <p>${program.description}</p>
+        <div class="tuition-info">
+          <strong>Học phí: ${program.tuition}</strong>
+        </div>
+        <div class="requirements">
+          <h4>Yêu cầu:</h4>
+          <ul>
+            ${program.requirements.map(req => `<li>${req}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <div class="study-abroad-card-footer">
+        <button class="apply-btn" onclick="applyProgram(${program.id})">Ứng tuyển</button>
+        <div class="deadline">Hạn: ${program.deadline}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCountryFlag(country) {
+  const flags = {
+    'USA': '🇺🇸',
+    'UK': '🇬🇧',
+    'Canada': '🇨🇦',
+    'Australia': '🇦🇺',
+    'Germany': '🇩🇪',
+    'Japan': '🇯🇵',
+    'Korea': '🇰🇷',
+    'Singapore': '🇸🇬'
+  };
+  return flags[country] || '🌍';
+}
+
+function filterStudyAbroadPrograms() {
+  const countryFilter = document.getElementById('country-filter')?.value || '';
+  const programFilter = document.getElementById('program-filter')?.value || '';
+  
+  const filteredPrograms = studyAbroadPrograms.filter(program => {
+    return (countryFilter === '' || program.country === countryFilter) &&
+           (programFilter === '' || program.program === programFilter);
+  });
+  
+  displayStudyAbroadPrograms(filteredPrograms);
+}
+
+function applyProgram(programId) {
+  alert(`Bạn đã chọn ứng tuyển chương trình ID: ${programId}. Chức năng này đang được phát triển.`);
+}
+
+// News Functions
+function initNews() {
+  displayNews(newsArticles);
+  
+  // Event listeners for category buttons
+  document.querySelectorAll('.news-category-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Update active button
+      document.querySelectorAll('.news-category-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      
+      // Filter news
+      const category = e.target.dataset.category;
+      filterNews(category);
+    });
+  });
+  
+  // Load more news button
+  document.getElementById('load-more-news')?.addEventListener('click', loadMoreNews);
+}
+
+function displayNews(articles) {
+  const grid = document.getElementById('news-grid');
+  if (!grid) return;
+  
+  if (articles.length === 0) {
+    grid.innerHTML = '<div class="no-results">Không có tin tức nào.</div>';
+    return;
+  }
+  
+  grid.innerHTML = articles.map(article => `
+    <div class="news-card">
+      <div class="news-card-image">
+        <img src="${article.image}" alt="${article.title}" loading="lazy">
+        <div class="news-category-badge">${getCategoryName(article.category)}</div>
+      </div>
+      <div class="news-card-content">
+        <div class="news-date">${formatDate(article.date)}</div>
+        <h3 class="news-title">${article.title}</h3>
+        <p class="news-excerpt">${article.excerpt}</p>
+        <div class="news-card-footer">
+          <a href="#" class="read-more-btn" onclick="readArticle(${article.id})">Đọc thêm →</a>
+          <div class="news-tags">
+            ${article.tags.map(tag => `<span class="news-tag">${tag}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCategoryName(category) {
+  const names = {
+    'university': 'Đại học',
+    'scholarship': 'Học bổng',
+    'career': 'Nghề nghiệp',
+    'study-abroad': 'Du học',
+    'exam': 'Thi cử'
+  };
+  return names[category] || 'Tin tức';
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('vi-VN');
+}
+
+function filterNews(category) {
+  const filteredNews = category === 'all' ? 
+    newsArticles : 
+    newsArticles.filter(article => article.category === category);
+  
+  displayNews(filteredNews);
+}
+
+function readArticle(articleId) {
+  alert(`Đọc bài viết ID: ${articleId}. Chức năng này đang được phát triển.`);
+}
+
+function loadMoreNews() {
+  // Simulate loading more news
+  alert('Tính năng tải thêm tin tức đang được phát triển.');
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize existing functions
+  if (typeof initUniversityInfo === 'function') {
+    initUniversityInfo();
+  }
+  if (typeof initQuiz === 'function') {
+    initQuiz();
+  }
+  
+  // Initialize new functions
+  initStudyAbroad();
+  initNews();
+});

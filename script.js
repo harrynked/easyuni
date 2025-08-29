@@ -2614,8 +2614,7 @@ function initStudyAbroad() {
   // Advanced search toggle
   document.getElementById('toggle-advanced-search')?.addEventListener('click', toggleAdvancedSearch);
 }
-// Set up global event listeners
-setupGlobalEventListeners();
+
 
 // Initialize deadlines for existing programs
 studyAbroadPrograms.forEach(program => {
@@ -2628,6 +2627,8 @@ studyAbroadPrograms.forEach(program => {
 
 console.log('Enhanced Education Counseling System initialized successfully!');
 
+// Set up global event listeners
+setupGlobalEventListeners();
 function setupGlobalEventListeners() {
   // Keyboard shortcuts
   document.addEventListener('keydown', function(e) {
@@ -2643,13 +2644,13 @@ function setupGlobalEventListeners() {
           break;
       }
     }
-  }};
+  });
+}
     if (e.key === 'Escape') {
       // Close any open modals
       document.querySelectorAll('.modal-overlay').forEach(modal => modal.remove());
-    }
-  });
-function displayStudyAbroadPrograms(programs) {
+    };
+function displayStudyAbroadPrograms(programs) { 
   const grid = document.getElementById('study-abroad-grid');
   if (!grid) return;
   
@@ -2796,7 +2797,8 @@ function displayStudyAbroadPrograms(programs) {
   });
   
   document.body.appendChild(compareButton);
-}
+  }
+
 
 // Additional utility functions for enhanced features
 function performTrendingSearch(query) {

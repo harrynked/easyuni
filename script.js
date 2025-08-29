@@ -1905,7 +1905,12 @@ const studyAbroadPrograms = [
     tuition: "$50,000/năm",
     requirements: ["IELTS 7.0+", "GRE 320+", "Bachelor GPA 3.5+"],
     deadline: "01/12/2025",
-    description: "Chương trình Thạc sĩ Khoa học Máy tính tại Harvard với giảng viên hàng đầu thế giới."
+    description: "Chương trình Thạc sĩ Khoa học Máy tính tại Harvard với giảng viên hàng đầu thế giới.",
+    ranking: 1,
+    scholarship: true,
+    difficulty: "Cao",
+    livingCost: "$2,000/tháng",
+    location: "Cambridge, Massachusetts"
   },
   {
     id: 2,
@@ -1917,7 +1922,12 @@ const studyAbroadPrograms = [
     tuition: "£35,000/năm",
     requirements: ["IELTS 7.5+", "A-levels AAA", "Personal Statement"],
     deadline: "15/01/2025",
-    description: "Chương trình Cử nhân Kinh tế học tại Oxford với truyền thống giáo dục lâu đời."
+    description: "Chương trình Cử nhân Kinh tế học tại Oxford với truyền thống giáo dục lâu đời.",
+    ranking: 2,
+    scholarship: true,
+    difficulty: "Cao",
+    livingCost: "£1,500/tháng",
+    location: "Oxford, England"
   },
   {
     id: 3,
@@ -1929,7 +1939,12 @@ const studyAbroadPrograms = [
     tuition: "$25,000/năm",
     requirements: ["IELTS 7.0+", "Master degree", "Research proposal"],
     deadline: "31/01/2025",
-    description: "Chương trình Tiến sĩ Kỹ thuật với cơ hội nghiên cứu tại các phòng lab hiện đại."
+    description: "Chương trình Tiến sĩ Kỹ thuật với cơ hội nghiên cứu tại các phòng lab hiện đại.",
+    ranking: 3,
+    scholarship: false,
+    difficulty: "Trung bình",
+    livingCost: "CAD $1,200/tháng",
+    location: "Toronto, Ontario"
   },
   {
     id: 4,
@@ -1941,11 +1956,33 @@ const studyAbroadPrograms = [
     tuition: "AUD $45,000/năm",
     requirements: ["IELTS 6.5+", "GMAT 600+", "Work experience 2+ years"],
     deadline: "28/02/2025",
-    description: "MBA tại Melbourne với focus vào thị trường châu Á - Thái Bình Dương."
+    description: "MBA tại Melbourne với focus vào thị trường châu Á - Thái Bình Dương.",
+    ranking: 5,
+    scholarship: true,
+    difficulty: "Trung bình",
+    livingCost: "AUD $1,800/tháng",
+    location: "Melbourne, Victoria"
+  },
+  {
+    id: 5,
+    university: "ETH Zurich",
+    country: "Switzerland",
+    program: "Master",
+    major: "Data Science",
+    duration: "2 năm",
+    tuition: "CHF 1,500/năm",
+    requirements: ["IELTS 7.0+", "Bachelor GPA 3.7+", "Mathematics background"],
+    deadline: "15/03/2025",
+    description: "Chương trình Data Science hàng đầu châu Âu với chi phí học tập hấp dẫn.",
+    ranking: 4,
+    scholarship: false,
+    difficulty: "Cao",
+    livingCost: "CHF 2,000/tháng",
+    location: "Zurich, Switzerland"
   }
 ];
 
-// News Data
+// Extended News Data
 const newsArticles = [
   {
     id: 1,
@@ -1954,7 +1991,10 @@ const newsArticles = [
     category: "university",
     date: "2025-01-15",
     tags: ["tuyển sinh", "đánh giá năng lực"],
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400"
+    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400",
+    readTime: "5 phút",
+    views: 1234,
+    featured: true
   },
   {
     id: 2,
@@ -1963,7 +2003,10 @@ const newsArticles = [
     category: "scholarship",
     date: "2025-01-14",
     tags: ["học bổng", "Nhật Bản", "MEXT"],
-    image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=400"
+    image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=400",
+    readTime: "7 phút",
+    views: 2156,
+    featured: true
   },
   {
     id: 3,
@@ -1972,18 +2015,604 @@ const newsArticles = [
     category: "career",
     date: "2025-01-13",
     tags: ["nghề nghiệp", "AI", "xu hướng"],
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400"
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400",
+    readTime: "10 phút",
+    views: 3421,
+    featured: false
+  },
+  {
+    id: 4,
+    title: "Hướng dẫn chuẩn bị hồ sơ du học từ A-Z",
+    excerpt: "Bí quyết tạo ra một hồ sơ du học ấn tượng và các lỗi thường gặp cần tránh...",
+    category: "study-abroad",
+    date: "2025-01-12",
+    tags: ["hồ sơ", "du học", "tips"],
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400",
+    readTime: "12 phút",
+    views: 987,
+    featured: false
   }
 ];
 
-// Study Abroad Functions
+// Scholarship Data
+const scholarships = [
+  {
+    id: 1,
+    name: "Học bổng Chevening 2025",
+    provider: "Chính phủ Anh",
+    amount: "Toàn phần",
+    country: "UK",
+    level: "Master",
+    deadline: "02/11/2025",
+    requirements: ["IELTS 6.5+", "2 năm kinh nghiệm làm việc", "Tiềm năng lãnh đạo"],
+    description: "Học bổng toàn phần cho chương trình Thạc sĩ tại các trường đại học hàng đầu Anh Quốc."
+  },
+  {
+    id: 2,
+    name: "Học bổng MEXT Nhật Bản",
+    provider: "Chính phủ Nhật Bản",
+    amount: "¥143,000/tháng + học phí",
+    country: "Japan",
+    level: "Master/PhD",
+    deadline: "31/05/2025",
+    requirements: ["JLPT N2+", "GPA 3.0+", "Thư giới thiệu"],
+    description: "Học bổng của chính phủ Nhật Bản cho sinh viên quốc tế."
+  },
+  {
+    id: 3,
+    name: "Australia Awards Scholarship",
+    provider: "Chính phủ Australia",
+    amount: "Toàn phần",
+    country: "Australia",
+    level: "Master",
+    deadline: "30/04/2025",
+    requirements: ["IELTS 6.5+", "Kinh nghiệm làm việc", "Leadership potential"],
+    description: "Học bổng toàn phần cho sinh viên từ các nước đang phát triển."
+  }
+];
+
+// University Rankings Data
+const universityRankings = {
+  world: [
+    { rank: 1, name: "Massachusetts Institute of Technology (MIT)", country: "USA", score: 100 },
+    { rank: 2, name: "Stanford University", country: "USA", score: 98.4 },
+    { rank: 3, name: "Harvard University", country: "USA", score: 97.6 },
+    { rank: 4, name: "California Institute of Technology", country: "USA", score: 97.0 },
+    { rank: 5, name: "University of Oxford", country: "UK", score: 95.6 }
+  ],
+  vietnam: [
+    { rank: 1, name: "Đại học Quốc gia Hà Nội", score: 85.2 },
+    { rank: 2, name: "Đại học Quốc gia TP.HCM", score: 83.7 },
+    { rank: 3, name: "Đại học Bách khoa Hà Nội", score: 82.1 },
+    { rank: 4, name: "Đại học Y Hà Nội", score: 80.5 },
+    { rank: 5, name: "Đại học Kinh tế Quốc dân", score: 79.3 }
+  ]
+};
+
+// User Profile Management
+class UserProfile {
+  constructor() {
+    this.profile = this.loadProfile() || this.createDefaultProfile();
+    this.favorites = this.loadFavorites() || [];
+    this.applications = this.loadApplications() || [];
+  }
+
+  createDefaultProfile() {
+    return {
+      name: '',
+      email: '',
+      phone: '',
+      currentEducation: '',
+      targetLevel: '',
+      preferredCountries: [],
+      interestedMajors: [],
+      budget: '',
+      timeline: '',
+      englishScore: '',
+      gpa: ''
+    };
+  }
+
+  saveProfile(profileData) {
+    this.profile = { ...this.profile, ...profileData };
+    this.persistProfile();
+  }
+
+  loadProfile() {
+    // In a real app, this would load from localStorage or API
+    return null;
+  }
+
+  persistProfile() {
+    // In a real app, this would save to localStorage or API
+    console.log('Profile saved:', this.profile);
+  }
+
+  loadFavorites() {
+    return [];
+  }
+
+  saveFavorite(type, id) {
+    const favorite = { type, id, date: new Date().toISOString() };
+    this.favorites.push(favorite);
+    console.log('Favorite saved:', favorite);
+  }
+
+  loadApplications() {
+    return [];
+  }
+
+  saveApplication(programId, status = 'draft') {
+    const application = {
+      id: Date.now(),
+      programId,
+      status,
+      date: new Date().toISOString(),
+      documents: []
+    };
+    this.applications.push(application);
+    console.log('Application saved:', application);
+  }
+}
+
+// Advanced Search and Filter System
+class AdvancedSearch {
+  constructor() {
+    this.filters = {
+      country: '',
+      program: '',
+      major: '',
+      tuitionRange: [0, 100000],
+      hasScholarship: false,
+      difficulty: '',
+      ranking: [1, 100]
+    };
+  }
+
+  applyFilters(programs) {
+    return programs.filter(program => {
+      return this.matchesCountry(program) &&
+             this.matchesProgram(program) &&
+             this.matchesMajor(program) &&
+             this.matchesTuition(program) &&
+             this.matchesScholarship(program) &&
+             this.matchesDifficulty(program) &&
+             this.matchesRanking(program);
+    });
+  }
+
+  matchesCountry(program) {
+    return !this.filters.country || program.country === this.filters.country;
+  }
+
+  matchesProgram(program) {
+    return !this.filters.program || program.program === this.filters.program;
+  }
+
+  matchesMajor(program) {
+    return !this.filters.major || program.major.toLowerCase().includes(this.filters.major.toLowerCase());
+  }
+
+  matchesTuition(program) {
+    const tuitionValue = this.extractTuitionValue(program.tuition);
+    return tuitionValue >= this.filters.tuitionRange[0] && tuitionValue <= this.filters.tuitionRange[1];
+  }
+
+  matchesScholarship(program) {
+    return !this.filters.hasScholarship || program.scholarship;
+  }
+
+  matchesDifficulty(program) {
+    return !this.filters.difficulty || program.difficulty === this.filters.difficulty;
+  }
+
+  matchesRanking(program) {
+    return program.ranking >= this.filters.ranking[0] && program.ranking <= this.filters.ranking[1];
+  }
+
+  extractTuitionValue(tuitionStr) {
+    const match = tuitionStr.match(/[\d,]+/);
+    return match ? parseInt(match[0].replace(/,/g, '')) : 0;
+  }
+
+  updateFilter(key, value) {
+    this.filters[key] = value;
+  }
+
+  resetFilters() {
+    this.filters = {
+      country: '',
+      program: '',
+      major: '',
+      tuitionRange: [0, 100000],
+      hasScholarship: false,
+      difficulty: '',
+      ranking: [1, 100]
+    };
+  }
+}
+
+// Application Tracking System
+class ApplicationTracker {
+  constructor() {
+    this.applications = [];
+    this.statuses = ['draft', 'submitted', 'under_review', 'accepted', 'rejected', 'waitlist'];
+  }
+
+  createApplication(programId, userProfile) {
+    const application = {
+      id: Date.now(),
+      programId,
+      status: 'draft',
+      createdDate: new Date().toISOString(),
+      lastModified: new Date().toISOString(),
+      documents: this.getRequiredDocuments(programId),
+      timeline: this.generateTimeline(programId),
+      notes: []
+    };
+    
+    this.applications.push(application);
+    return application;
+  }
+
+  getRequiredDocuments(programId) {
+    const program = studyAbroadPrograms.find(p => p.id === programId);
+    const documents = [
+      { name: 'Personal Statement', required: true, status: 'pending' },
+      { name: 'CV/Resume', required: true, status: 'pending' },
+      { name: 'Academic Transcripts', required: true, status: 'pending' },
+      { name: 'Letters of Recommendation', required: true, status: 'pending' }
+    ];
+
+    if (program.requirements.some(req => req.includes('IELTS'))) {
+      documents.push({ name: 'English Proficiency Test', required: true, status: 'pending' });
+    }
+    if (program.requirements.some(req => req.includes('GRE'))) {
+      documents.push({ name: 'GRE Scores', required: true, status: 'pending' });
+    }
+    if (program.requirements.some(req => req.includes('GMAT'))) {
+      documents.push({ name: 'GMAT Scores', required: true, status: 'pending' });
+    }
+
+    return documents;
+  }
+
+  generateTimeline(programId) {
+    const program = studyAbroadPrograms.find(p => p.id === programId);
+    const deadlineDate = new Date(program.deadline.split('/').reverse().join('-'));
+    const timeline = [];
+
+    // Generate milestones leading up to deadline
+    const milestones = [
+      { task: 'Complete application form', weeks: 8 },
+      { task: 'Gather required documents', weeks: 6 },
+      { task: 'Write personal statement', weeks: 4 },
+      { task: 'Request recommendation letters', weeks: 3 },
+      { task: 'Final review and submission', weeks: 1 }
+    ];
+
+    milestones.forEach(milestone => {
+      const milestoneDate = new Date(deadlineDate);
+      milestoneDate.setDate(milestoneDate.getDate() - (milestone.weeks * 7));
+      timeline.push({
+        date: milestoneDate.toISOString(),
+        task: milestone.task,
+        completed: false
+      });
+    });
+
+    return timeline.sort((a, b) => new Date(a.date) - new Date(b.date));
+  }
+
+  updateApplicationStatus(applicationId, status) {
+    const application = this.applications.find(app => app.id === applicationId);
+    if (application) {
+      application.status = status;
+      application.lastModified = new Date().toISOString();
+    }
+  }
+
+  addNote(applicationId, note) {
+    const application = this.applications.find(app => app.id === applicationId);
+    if (application) {
+      application.notes.push({
+        text: note,
+        date: new Date().toISOString()
+      });
+    }
+  }
+}
+
+// Smart Recommendation Engine
+class RecommendationEngine {
+  constructor(userProfile) {
+    this.userProfile = userProfile;
+    this.weights = {
+      country: 0.2,
+      budget: 0.3,
+      major: 0.25,
+      level: 0.15,
+      difficulty: 0.1
+    };
+  }
+
+  getRecommendations(programs, limit = 5) {
+    const scoredPrograms = programs.map(program => ({
+      ...program,
+      recommendationScore: this.calculateScore(program)
+    }));
+
+    return scoredPrograms
+      .sort((a, b) => b.recommendationScore - a.recommendationScore)
+      .slice(0, limit);
+  }
+
+  calculateScore(program) {
+    let score = 0;
+
+    // Country preference
+    if (this.userProfile.preferredCountries.includes(program.country)) {
+      score += this.weights.country * 100;
+    }
+
+    // Budget compatibility
+    const programCost = this.extractTuitionValue(program.tuition);
+    const userBudget = this.extractTuitionValue(this.userProfile.budget);
+    if (userBudget > 0) {
+      const budgetScore = Math.max(0, 100 - (Math.abs(programCost - userBudget) / userBudget * 100));
+      score += this.weights.budget * budgetScore;
+    }
+
+    // Major match
+    if (this.userProfile.interestedMajors.some(major => 
+        program.major.toLowerCase().includes(major.toLowerCase()))) {
+      score += this.weights.major * 100;
+    }
+
+    // Level match
+    if (program.program === this.userProfile.targetLevel) {
+      score += this.weights.level * 100;
+    }
+
+    // Difficulty adjustment based on user's academic performance
+    const difficultyScore = this.getDifficultyScore(program.difficulty);
+    score += this.weights.difficulty * difficultyScore;
+
+    return Math.min(100, score);
+  }
+
+  getDifficultyScore(difficulty) {
+    const userGPA = parseFloat(this.userProfile.gpa) || 3.0;
+    
+    if (difficulty === 'Cao' && userGPA >= 3.5) return 100;
+    if (difficulty === 'Trung bình' && userGPA >= 3.0) return 100;
+    if (difficulty === 'Thấp') return 100;
+    
+    return Math.max(0, userGPA * 25);
+  }
+
+  extractTuitionValue(tuitionStr) {
+    if (!tuitionStr) return 0;
+    const match = tuitionStr.match(/[\d,]+/);
+    return match ? parseInt(match[0].replace(/,/g, '')) : 0;
+  }
+}
+
+// Calendar and Deadline Management
+class DeadlineManager {
+  constructor() {
+    this.deadlines = [];
+    this.reminders = [];
+  }
+
+  addDeadline(programId, deadlineDate, title) {
+    const deadline = {
+      id: Date.now(),
+      programId,
+      date: new Date(deadlineDate),
+      title,
+      type: 'application',
+      completed: false
+    };
+    
+    this.deadlines.push(deadline);
+    this.setReminders(deadline);
+  }
+
+  setReminders(deadline) {
+    const reminderDays = [30, 14, 7, 3, 1]; // Days before deadline
+    
+    reminderDays.forEach(days => {
+      const reminderDate = new Date(deadline.date);
+      reminderDate.setDate(reminderDate.getDate() - days);
+      
+      if (reminderDate > new Date()) {
+        this.reminders.push({
+          id: Date.now() + days,
+          deadlineId: deadline.id,
+          date: reminderDate,
+          message: `${days} ngày nữa đến hạn: ${deadline.title}`,
+          sent: false
+        });
+      }
+    });
+  }
+
+  getUpcomingDeadlines(daysAhead = 30) {
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() + daysAhead);
+    
+    return this.deadlines.filter(deadline => 
+      deadline.date >= new Date() && deadline.date <= cutoffDate
+    ).sort((a, b) => a.date - b.date);
+  }
+
+  getDueReminders() {
+    const now = new Date();
+    return this.reminders.filter(reminder => 
+      !reminder.sent && reminder.date <= now
+    );
+  }
+}
+
+// Document Management System
+class DocumentManager {
+  constructor() {
+    this.documents = [];
+    this.templates = this.initializeTemplates();
+  }
+
+  initializeTemplates() {
+    return {
+      personalStatement: {
+        name: 'Personal Statement Template',
+        sections: [
+          'Introduction - Giới thiệu bản thân',
+          'Academic Background - Lý lịch học tập',
+          'Professional Experience - Kinh nghiệm làm việc',
+          'Why this Program - Tại sao chọn chương trình này',
+          'Career Goals - Mục tiêu nghề nghiệp',
+          'Conclusion - Kết luận'
+        ]
+      },
+      cv: {
+        name: 'CV Template',
+        sections: [
+          'Personal Information - Thông tin cá nhân',
+          'Education - Học vấn',
+          'Work Experience - Kinh nghiệm làm việc',
+          'Skills - Kỹ năng',
+          'Languages - Ngôn ngữ',
+          'References - Người giới thiệu'
+        ]
+      }
+    };
+  }
+
+  createDocument(type, applicationId) {
+    const template = this.templates[type];
+    if (!template) return null;
+
+    const document = {
+      id: Date.now(),
+      type,
+      applicationId,
+      name: template.name,
+      content: template.sections.map(section => ({ section, content: '' })),
+      createdDate: new Date().toISOString(),
+      lastModified: new Date().toISOString(),
+      status: 'draft'
+    };
+
+    this.documents.push(document);
+    return document;
+  }
+
+  updateDocument(documentId, content) {
+    const document = this.documents.find(doc => doc.id === documentId);
+    if (document) {
+      document.content = content;
+      document.lastModified = new Date().toISOString();
+    }
+  }
+
+  getDocumentsByApplication(applicationId) {
+    return this.documents.filter(doc => doc.applicationId === applicationId);
+  }
+}
+
+// Statistics and Analytics
+class AnalyticsManager {
+  constructor() {
+    this.stats = {
+      totalViews: 0,
+      programViews: {},
+      searchQueries: [],
+      userInteractions: []
+    };
+  }
+
+  trackView(type, id) {
+    this.stats.totalViews++;
+    
+    if (type === 'program') {
+      this.stats.programViews[id] = (this.stats.programViews[id] || 0) + 1;
+    }
+
+    this.stats.userInteractions.push({
+      type: 'view',
+      target: `${type}:${id}`,
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  trackSearch(query, filters) {
+    this.stats.searchQueries.push({
+      query,
+      filters,
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  trackInteraction(action, target, data = {}) {
+    this.stats.userInteractions.push({
+      type: action,
+      target,
+      data,
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  getPopularPrograms(limit = 5) {
+    return Object.entries(this.stats.programViews)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, limit)
+      .map(([id, views]) => ({
+        program: studyAbroadPrograms.find(p => p.id === parseInt(id)),
+        views
+      }));
+  }
+
+  getTrendingSearches(limit = 10) {
+    const searches = {};
+    this.stats.searchQueries.forEach(({ query }) => {
+      searches[query] = (searches[query] || 0) + 1;
+    });
+
+    return Object.entries(searches)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, limit);
+  }
+}
+
+// Initialize global instances
+const userProfile = new UserProfile();
+const advancedSearch = new AdvancedSearch();
+const applicationTracker = new ApplicationTracker();
+const recommendationEngine = new RecommendationEngine(userProfile.profile);
+const deadlineManager = new DeadlineManager();
+const documentManager = new DocumentManager();
+const analyticsManager = new AnalyticsManager();
+
+// Enhanced Study Abroad Functions
 function initStudyAbroad() {
   displayStudyAbroadPrograms(studyAbroadPrograms);
+  initializeFilters();
+  loadRecommendations();
   
-  // Event listeners for filters
-  document.getElementById('country-filter')?.addEventListener('change', filterStudyAbroadPrograms);
-  document.getElementById('program-filter')?.addEventListener('change', filterStudyAbroadPrograms);
-  document.getElementById('study-abroad-search-btn')?.addEventListener('click', filterStudyAbroadPrograms);
+  // Event listeners for enhanced filters
+  document.getElementById('country-filter')?.addEventListener('change', applyAdvancedFilters);
+  document.getElementById('program-filter')?.addEventListener('change', applyAdvancedFilters);
+  document.getElementById('major-search')?.addEventListener('input', applyAdvancedFilters);
+  document.getElementById('has-scholarship')?.addEventListener('change', applyAdvancedFilters);
+  document.getElementById('difficulty-filter')?.addEventListener('change', applyAdvancedFilters);
+  document.getElementById('sort-by')?.addEventListener('change', applySorting);
+  
+  // Reset filters button
+  document.getElementById('reset-filters')?.addEventListener('click', resetAllFilters);
+  
+  // Advanced search toggle
+  document.getElementById('toggle-advanced-search')?.addEventListener('click', toggleAdvancedSearch);
 }
 
 function displayStudyAbroadPrograms(programs) {
@@ -1991,27 +2620,42 @@ function displayStudyAbroadPrograms(programs) {
   if (!grid) return;
   
   if (programs.length === 0) {
-    grid.innerHTML = '<div class="no-results">Không tìm thấy chương trình phù hợp.</div>';
+    grid.innerHTML = '<div class="no-results">Không tìm thấy chương trình phù hợp. <button onclick="resetAllFilters()">Đặt lại bộ lọc</button></div>';
     return;
   }
   
   grid.innerHTML = programs.map(program => `
-    <div class="study-abroad-card">
+    <div class="study-abroad-card enhanced" data-program-id="${program.id}">
+      <div class="card-badges">
+        ${program.scholarship ? '<span class="badge scholarship">Có học bổng</span>' : ''}
+        <span class="badge ranking">Top ${program.ranking}</span>
+        <span class="badge difficulty ${program.difficulty.toLowerCase()}">${program.difficulty}</span>
+      </div>
+      
       <div class="study-abroad-card-header">
         <div class="country-flag">${getCountryFlag(program.country)}</div>
         <h3>${program.university}</h3>
-        <p>${program.country}</p>
+        <p class="location">${program.location}</p>
       </div>
+      
       <div class="study-abroad-card-body">
         <div class="program-info">
           <span class="info-tag">${program.program}</span>
           <span class="info-tag">${program.major}</span>
           <span class="info-tag">${program.duration}</span>
         </div>
-        <p>${program.description}</p>
-        <div class="tuition-info">
-          <strong>Học phí: ${program.tuition}</strong>
+        
+        <p class="description">${program.description}</p>
+        
+        <div class="cost-info">
+          <div class="tuition">
+            <strong>Học phí: ${program.tuition}</strong>
+          </div>
+          <div class="living-cost">
+            Chi phí sinh hoạt: ${program.livingCost}
+          </div>
         </div>
+        
         <div class="requirements">
           <h4>Yêu cầu:</h4>
           <ul>
@@ -2019,139 +2663,140 @@ function displayStudyAbroadPrograms(programs) {
           </ul>
         </div>
       </div>
+      
       <div class="study-abroad-card-footer">
-        <button class="apply-btn" onclick="applyProgram(${program.id})">Ứng tuyển</button>
-        <div class="deadline">Hạn: ${program.deadline}</div>
+        <div class="card-actions">
+          <button class="btn-primary apply-btn" onclick="startApplication(${program.id})">
+            Ứng tuyển
+          </button>
+          <button class="btn-secondary favorite-btn" onclick="toggleFavorite('program', ${program.id})">
+            ❤️ Yêu thích
+          </button>
+          <button class="btn-secondary compare-btn" onclick="addToCompare(${program.id})">
+            ⚖️ So sánh
+          </button>
+        </div>
       </div>
-    </div>
-  `).join('');
+
+// Compare button quick handler
+  document.getElementById('compare-button')?.addEventListener('click', () => {
+    showComparison();
+  };
+
+  
+// Range inputs handlers
+function updateTuitionRange(e) {
+  const value = Number(e?.target?.value ?? document.getElementById('tuition-range')?.value ?? 0);
+  // Assuming single-ended slider controls the upper bound
+  advancedSearch.updateFilter('tuitionRange', [0, value]);
+  // Update UI label if present
+  const label = document.getElementById('tuition-range-label');
+  if (label) label.textContent = `≤ ${value.toLocaleString()}`;
+  applyAdvancedFilters();
+}
+
+function updateRankingRange(e) {
+  const value = Number(e?.target?.value ?? document.getElementById('ranking-range')?.value ?? 100);
+  // Assuming single-ended slider controls the upper bound
+  advancedSearch.updateFilter('ranking', [1, value]);
+  const label = document.getElementById('ranking-range-label');
+  if (label) label.textContent = `Top ≤ ${value}`;
+  applyAdvancedFilters();
+}
+
+// Utility mappers
+function getCategoryName(key) {
+  const map = {
+    'university': 'Đại học',
+    'scholarship': 'Học bổng',
+    'career': 'Nghề nghiệp',
+    'study-abroad': 'Du học'
+  };
+  return map[key] || key;
+}
+
+function formatDate(isoOrYYYYMMDD) {
+  // Handles 'YYYY-MM-DD' or ISO strings
+  const d = new Date(isoOrYYYYMMDD);
+  if (isNaN(d)) return isoOrYYYYMMDD;
+  return d.toLocaleDateString('vi-VN');
 }
 
 function getCountryFlag(country) {
+  // Minimal mapping, fallback to country text
   const flags = {
     'USA': '🇺🇸',
     'UK': '🇬🇧',
     'Canada': '🇨🇦',
     'Australia': '🇦🇺',
-    'Germany': '🇩🇪',
+    'Switzerland': '🇨🇭',
     'Japan': '🇯🇵',
-    'Korea': '🇰🇷',
-    'Singapore': '🇸🇬'
+    'Germany': '🇩🇪',
+    'Singapore': '🇸🇬',
+    'Vietnam': '🇻🇳',
   };
-  return flags[country] || '🌍';
+  return `<span class="flag">${flags[country] || '🏳️'}${flags[country] ? '' : ' ' + country}</span>`;
 }
 
-function filterStudyAbroadPrograms() {
-  const countryFilter = document.getElementById('country-filter')?.value || '';
-  const programFilter = document.getElementById('program-filter')?.value || '';
-  
-  const filteredPrograms = studyAbroadPrograms.filter(program => {
-    return (countryFilter === '' || program.country === countryFilter) &&
-           (programFilter === '' || program.program === programFilter);
-  });
-  
-  displayStudyAbroadPrograms(filteredPrograms);
-}
-
-function applyProgram(programId) {
-  alert(`Bạn đã chọn ứng tuyển chương trình ID: ${programId}. Chức năng này đang được phát triển.`);
-}
-
-// News Functions
-function initNews() {
-  displayNews(newsArticles);
-  
-  // Event listeners for category buttons
-  document.querySelectorAll('.news-category-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      // Update active button
-      document.querySelectorAll('.news-category-btn').forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
-      
-      // Filter news
-      const category = e.target.dataset.category;
-      filterNews(category);
-    });
-  });
-  
-  // Load more news button
-  document.getElementById('load-more-news')?.addEventListener('click', loadMoreNews);
-}
-
-function displayNews(articles) {
-  const grid = document.getElementById('news-grid');
-  if (!grid) return;
-  
-  if (articles.length === 0) {
-    grid.innerHTML = '<div class="no-results">Không có tin tức nào.</div>';
-    return;
-  }
-  
-  grid.innerHTML = articles.map(article => `
-    <div class="news-card">
-      <div class="news-card-image">
-        <img src="${article.image}" alt="${article.title}" loading="lazy">
-        <div class="news-category-badge">${getCategoryName(article.category)}</div>
-      </div>
-      <div class="news-card-content">
-        <div class="news-date">${formatDate(article.date)}</div>
-        <h3 class="news-title">${article.title}</h3>
-        <p class="news-excerpt">${article.excerpt}</p>
-        <div class="news-card-footer">
-          <a href="#" class="read-more-btn" onclick="readArticle(${article.id})">Đọc thêm →</a>
-          <div class="news-tags">
-            ${article.tags.map(tag => `<span class="news-tag">${tag}</span>`).join('')}
+// Make displayRecommendations support both direct data and self-fetch
+(function enhanceDisplayRecommendations() {
+  const original = typeof displayRecommendations === 'function' ? displayRecommendations : null;
+  window.displayRecommendations = function(programs) {
+    // If programs not provided, compute then render
+    if (!programs) {
+      const recommended = recommendationEngine.getRecommendations(studyAbroadPrograms, 3);
+      return original ? original(recommended) : (function render(progs) {
+        const container = document.getElementById('recommendations-container');
+        if (!container || progs.length === 0) return;
+        container.innerHTML = `
+          <div class="recommendations-section">
+            <h3>🎯 Gợi ý cho bạn</h3>
+            <div class="recommendations-grid">
+              ${progs.map(program => `
+                <div class="recommendation-card" onclick="showProgramDetails(${program.id})">
+                  <div class="recommendation-score">${Math.round(program.recommendationScore)}%</div>
+                  <div class="recommendation-content">
+                    <h4>${program.university}</h4>
+                    <p>${program.program} - ${program.major}</p>
+                    <span class="country">${getCountryFlag(program.country)} ${program.country}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
           </div>
+        `;
+      })(recommended);
+    }
+    // If provided, pass-through to original renderer if exists; else render inline
+    if (original && original !== window.displayRecommendations) {
+      return original(programs);
+    }
+    const container = document.getElementById('recommendations-container');
+    if (!container || programs.length === 0) return;
+    container.innerHTML = `
+      <div class="recommendations-section">
+        <h3>🎯 Gợi ý cho bạn</h3>
+        <div class="recommendations-grid">
+          ${programs.map(program => `
+            <div class="recommendation-card" onclick="showProgramDetails(${program.id})">
+              <div class="recommendation-score">${Math.round(program.recommendationScore)}%</div>
+              <div class="recommendation-content">
+                <h4>${program.university}</h4>
+                <p>${program.program} - ${program.major}</p>
+                <span class="country">${getCountryFlag(program.country)} ${program.country}</span>
+              </div>
+            </div>
+          `).join('')}
         </div>
       </div>
-    </div>
-  `).join('');
-}
-
-function getCategoryName(category) {
-  const names = {
-    'university': 'Đại học',
-    'scholarship': 'Học bổng',
-    'career': 'Nghề nghiệp',
-    'study-abroad': 'Du học',
-    'exam': 'Thi cử'
+    `;
   };
-  return names[category] || 'Tin tức';
+})();
+
+// Ensure dashboard call works even if called early
+if (typeof displayRecommendations === 'function') {
+  // no-op, wrapper above handles both cases
 }
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('vi-VN');
-}
-
-function filterNews(category) {
-  const filteredNews = category === 'all' ? 
-    newsArticles : 
-    newsArticles.filter(article => article.category === category);
-  
-  displayNews(filteredNews);
-}
-
-function readArticle(articleId) {
-  alert(`Đọc bài viết ID: ${articleId}. Chức năng này đang được phát triển.`);
-}
-
-function loadMoreNews() {
-  // Simulate loading more news
-  alert('Tính năng tải thêm tin tức đang được phát triển.');
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize existing functions
-  if (typeof initUniversityInfo === 'function') {
-    initUniversityInfo();
-  }
-  if (typeof initQuiz === 'function') {
-    initQuiz();
-  }
-  
-  // Initialize new functions
-  initStudyAbroad();
-  initNews();
-});
+// Optional: expose showComparison from a button with id 'compare-button' if present
+document.getElementById('compare-button')?.addEventListener('click', showComparison);

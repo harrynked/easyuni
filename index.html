@@ -281,6 +281,70 @@
           </div>
         </div>
       </section>
+
+      <!-- Du học Section -->
+<section id="study-abroad">
+  <h2>Du Học</h2>
+  <div class="study-abroad-container">
+    <div class="study-abroad-intro">
+      <h3>Khám phá cơ hội du học toàn cầu</h3>
+      <p>Mở rộng tầm nhìn và trải nghiệm giáo dục quốc tế tại các trường đại học hàng đầu thế giới.</p>
+    </div>
+    
+    <div class="study-abroad-filters">
+      <select id="country-filter">
+        <option value="">Tất cả quốc gia</option>
+        <option value="USA">Hoa Kỳ</option>
+        <option value="UK">Anh</option>
+        <option value="Canada">Canada</option>
+        <option value="Australia">Úc</option>
+        <option value="Germany">Đức</option>
+        <option value="Japan">Nhật Bản</option>
+        <option value="Korea">Hàn Quốc</option>
+        <option value="Singapore">Singapore</option>
+      </select>
+      
+      <select id="program-filter">
+        <option value="">Tất cả chương trình</option>
+        <option value="Bachelor">Cử nhân</option>
+        <option value="Master">Thạc sĩ</option>
+        <option value="PhD">Tiến sĩ</option>
+        <option value="Exchange">Trao đổi sinh viên</option>
+        <option value="Language">Khóa ngôn ngữ</option>
+      </select>
+      
+      <button id="study-abroad-search-btn">Tìm kiếm</button>
+    </div>
+    
+    <div id="study-abroad-grid" class="study-abroad-grid">
+      <!-- Study abroad programs will be populated here -->
+    </div>
+  </div>
+</section>
+
+<!-- Tin tức Section -->
+<section id="news">
+  <h2>Tin Tức Giáo Dục</h2>
+  <div class="news-container">
+    <div class="news-categories">
+      <button class="news-category-btn active" data-category="all">Tất cả</button>
+      <button class="news-category-btn" data-category="university">Đại học</button>
+      <button class="news-category-btn" data-category="scholarship">Học bổng</button>
+      <button class="news-category-btn" data-category="career">Nghề nghiệp</button>
+      <button class="news-category-btn" data-category="study-abroad">Du học</button>
+      <button class="news-category-btn" data-category="exam">Thi cử</button>
+    </div>
+    
+    <div id="news-grid" class="news-grid">
+      <!-- News articles will be populated here -->
+    </div>
+    
+    <div class="news-pagination">
+      <button id="load-more-news" class="cta-button">Xem thêm tin tức</button>
+    </div>
+  </div>
+</section>
+      
     </main>
     <!-- DONATION -->
     <div class="donate-container">
